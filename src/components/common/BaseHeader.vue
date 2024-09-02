@@ -1,6 +1,6 @@
 <template>
     <ElHeader class="custom-header">
-        <div class="header-left">
+        <div class="header-left" @click="home">
             <div class="logo-item">
                 <img
                     class="logo"
@@ -22,19 +22,18 @@
                 class="el-menu-demo"
                 mode="horizontal"
                 :ellipsis="false"
-                @select="handleSelect"
             >
-                <el-menu-item index="4" class="menu-item" @click="handlePublish">发布作品</el-menu-item>
                 <el-sub-menu index="5" class="submenu user-menu">
                     <template #title>
                         <img class="avatar" :src="userAvatar" alt="User Avatar" />
                     </template>
-                    <el-menu-item v-if="isLoggedIn" index="5-1" class="submenu-item">个人中心</el-menu-item>
+                    <el-menu-item v-if="isLoggedIn" index="5-1" class="submenu-item" @click="goToUser">个人中心</el-menu-item>
                     <el-menu-item v-if="isLoggedIn" index="5-2" class="submenu-item">我的收藏</el-menu-item>
                     <el-menu-item v-if="isLoggedIn" index="5-3" class="submenu-item">密码修改</el-menu-item>
                     <el-menu-item v-if="isLoggedIn" index="5-4" class="submenu-item" @click="handleLogout">退出登录</el-menu-item>
                     <el-menu-item v-else index="5-5" class="submenu-item" @click="handleLogin">登录</el-menu-item>
                 </el-sub-menu>
+                <el-menu-item index="4" class="menu-item" @click="handlePublish">发布作品</el-menu-item>
             </el-menu>
         </div>
     </ElHeader>
@@ -43,16 +42,28 @@
 <script setup lang="ts">
 import { ElHeader, ElInput, ElButton } from 'element-plus';
 import { Search } from '@element-plus/icons-vue'
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import router from '@/router';
+import { login } from '@/api/api';
+import { useUserStore } from '@/stores/user';
 
 const activeIndex = ref('1');
 const searchQuery = ref('');
 const isLoggedIn = ref(false); // 模拟用户登录状态
 const userAvatar = ref('/src/assets/avatar.png'); // 用户头像
+const userStore = useUserStore();
 
-const handleSelect = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
-};
+onMounted(()=>{
+  console.log("token:",userStore.token)
+  if (userStore.token && userStore.token != ''){
+    isLoggedIn.value = true
+  }
+})
+
+const goToUser = () => {
+  console.log("123")
+  router.push('/user')
+}
 
 const handleSearch = () => {
   console.log('搜索内容:', searchQuery.value);
@@ -69,15 +80,18 @@ const handlePublish = () => {
 };
 
 const handleLogin = () => {
-  isLoggedIn.value = true;
-  console.log('跳转到登录页面');
+  router.push('/login')
   // 这里可以添加跳转到登录页面的逻辑
 };
 
 const handleLogout = () => {
-  console.log('退出登录');
+  userStore.setToken('')
   isLoggedIn.value = false;
   // 这里可以添加退出登录的逻辑
+};
+
+const home = () => {
+  router.replace('/');
 };
 </script>
 
