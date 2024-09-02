@@ -1,0 +1,16 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".", // 这代表相对于此文件的位置
+    "paths": {
+      "@/*": ["src/*"] // 这表示@别名将会映射到src目录下
+    }
+  }}
