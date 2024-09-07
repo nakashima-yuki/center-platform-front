@@ -5,21 +5,21 @@
         <ElMain>
           <div class="home-content">
             <!-- 轮播图 -->
-            <el-carousel height="300px" indicator-position="outside">
+            <el-carousel height="300px" indicator-position="outside" class="anime-carousel">
               <el-carousel-item v-for="item in carouselItems" :key="item.id">
                 <img :src="item.image" class="carousel-image" />
               </el-carousel-item>
             </el-carousel>
 
             <!-- 推荐列表 -->
-            <div class="recommend-list">
-              <h2>推荐</h2>
+            <div class="recommend-list anime-section">
+              <h2 class="anime-title">推荐作品</h2>
               <el-row :gutter="20">
                 <el-col :span="6" v-for="item in recommendItems" :key="item.id">
-                  <el-card :body-style="{ padding: '0px' }">
+                  <el-card :body-style="{ padding: '0px' }" class="anime-card">
                     <img :src="item.image" class="recommend-image" />
-                    <div style="padding: 14px;">
-                      <span>{{ item.title }}</span>
+                    <div class="anime-card-content">
+                      <span class="anime-card-title">{{ item.title }}</span>
                     </div>
                   </el-card>
                 </el-col>
@@ -27,9 +27,9 @@
             </div>
 
             <!-- 热搜列表 -->
-            <div class="hot-search-list">
-              <h2>热搜</h2>
-              <el-table :data="hotSearchItems" style="width: 100%">
+            <div class="hot-search-list anime-section">
+              <h2 class="anime-title">热搜榜</h2>
+              <el-table :data="hotSearchItems" style="width: 100%" class="anime-table">
                 <el-table-column prop="rank" label="排名" width="50"></el-table-column>
                 <el-table-column prop="keyword" label="关键词"></el-table-column>
                 <el-table-column prop="searches" label="搜索量"></el-table-column>
@@ -37,14 +37,14 @@
             </div>
 
             <!-- 热门博主列表 -->
-            <div class="hot-blogger-list">
-              <h2>热门博主</h2>
+            <div class="hot-blogger-list anime-section">
+              <h2 class="anime-title">人气博主</h2>
               <el-row :gutter="20">
                 <el-col :span="6" v-for="blogger in hotBloggers" :key="blogger.id">
-                  <el-card :body-style="{ padding: '0px' }">
+                  <el-card :body-style="{ padding: '0px' }" class="anime-card">
                     <img :src="blogger.avatar" class="blogger-avatar" />
-                    <div style="padding: 14px;">
-                      <span>{{ blogger.name }}</span>
+                    <div class="anime-card-content">
+                      <span class="anime-card-title">{{ blogger.name }}</span>
                     </div>
                   </el-card>
                 </el-col>
